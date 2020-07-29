@@ -39,17 +39,13 @@ void main()
     printf("Enter output file name: ");
     scanf("%s",fileout);
     printf("%s\n",fileout);
-     
-    // for(int i=1; i<2;i++)
-    // {
-        printf("%ld\n",datasetsize);
-        float *v = malloc(datasetsize * sizeof(float));
+    printf("%ld\n",datasetsize);
+    float *v = malloc(datasetsize * sizeof(float));
 
-printf("test1");
-
+    //creation of dataset
     createdataset(datasetsize,fi);
 
-printf("test2");
+
 
     //Loading the dataset from the file 
     l1=clock();
@@ -65,7 +61,6 @@ printf("test2");
     l2=clock();
     l= ((double) (l2-l1));
 
-printf("test3");
 
     s1=clock();
     //selectionSort(v,datasetsize);
@@ -73,48 +68,31 @@ printf("test3");
     s2=clock();
     s= ((double) (s2-s1)) ;
 
-printf("test4");
+
 
     w1=clock();
     writeDataset(datasetsize,fo,v,bs,avg,mini,maxi);
     w2=clock();
     w= ((double) (w2-w1)) ;
-
-printf("test5");
-
-
-    
-    // printf("\n Sorting starts\n");
-    // for(long i=0;i<datasetsize;i++)
-    //     printf("\t%f\t",v[i]);
     printf("\n");
     printf("\t%lf\t,%lf\t,%lf\t\n",l,s,w);
     free(v);
+    }
 
-    
 
-}
 
-void createdataset(long  Datasetsize,char * filename)
-{
+void createdataset(long  Datasetsize,char * filename){
     FILE *f;
-printf("test11");
     float *v = malloc(Datasetsize * sizeof(float));
-printf("test12");
     //create a floating point random number between 1 and 100
     srand((unsigned int)time(NULL));
-printf("test121");
     for(long i = 0; i<Datasetsize;i++){ 
     printf("test122");
     v[i]=((float)rand()/(float)(RAND_MAX)) * 100;
     }
-printf("test13");
     // opening the file in binary format for writing 
-  
     f=fopen(filename,"wb");
-printf("test14");
     fwrite(v ,sizeof(float) , Datasetsize , f);
-printf("test15");
     fclose(f);
     free(v);
 }
@@ -122,37 +100,20 @@ printf("test15");
 void loadDataset (long  DataSetSize, char *filename, int buffersize, float *v) 
 {
     FILE *fp;
-printf("test31");
     // int bs;
     // float v[DataSetSize];
     char buff[buffersize];
     int s;
-
-printf("test32");
-
     // opening file in binary format for reading
     fp = fopen( filename , "rb" );
     if( fp==NULL) 
         printf("File cant be opened");
-
-printf("test33");
-
     // setting up buffer
     memset(buff,'\0',buffersize*sizeof(char));
     if(setvbuf(fp, buff, _IOFBF, buffersize)!=0)
         printf("Unsucessful buffer\n");
-
-printf("test34");
-
     if(fread(v , sizeof(float), DataSetSize, fp )!= DataSetSize)
         printf("UnSuccessful reading\n");
-
-
-// for(long i=0;i<DataSetSize;i++)
-//     printf("%f\t",v[i]);
-
-printf("test35");
-
     fflush(fp);
     fclose(fp);
 }
